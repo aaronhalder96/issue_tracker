@@ -11,7 +11,7 @@ const IssueDetails = ({ issue }: Props) => {
   return (
     <>
       <Heading>{issue.title}</Heading>
-      <Flex gap="2" my="2">
+      <Flex gap="2" my="2" align={"center"}>
         <IssueStatusBadge status={issue.status} />
         <Text>{issue.createdAt.toDateString()}</Text>
       </Flex>
