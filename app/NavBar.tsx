@@ -1,10 +1,13 @@
 "use client";
+import { Box } from "@radix-ui/themes";
 import classNames from "classnames";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AiFillBug } from "react-icons/ai";
 
 const NavBar = () => {
+  const { status, data: session } = useSession();
   const currentPath = usePathname();
 
   const links = [
@@ -25,9 +28,8 @@ const NavBar = () => {
       </Link>
       <ul className="flex space-x-6">
         {links.map((link) => (
-          <li>
+          <li key={link.href}>
             <Link
-              key={link.href}
               href={link.href}
               className={classNames({
                 "text-zinc-900": link.href === currentPath,
@@ -40,6 +42,14 @@ const NavBar = () => {
           </li>
         ))}
       </ul>
+      <Box>
+        {status === "authenticated" && (
+          <Link href="/api/auth/signout">Logout</Link>
+        )}
+        {status === "unauthenticated" && (
+          <Link href="/api/auth/signin">Login</Link>
+        )}
+      </Box>
     </nav>
   );
 };
