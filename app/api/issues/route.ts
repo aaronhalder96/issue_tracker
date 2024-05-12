@@ -13,10 +13,12 @@ export async function POST(request: NextRequest) {
   if (!valdiation.success)
     return NextResponse.json(valdiation.error.errors, { status: 400 });
 
+  const { title, description } = body;
+
   const newIssue = await prisma.issue.create({
     data: {
-      title: body.title,
-      description: body.description,
+      title,
+      description,
     },
   });
 
