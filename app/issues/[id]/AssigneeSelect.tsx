@@ -3,6 +3,7 @@ import { Skeleton } from "@/app/components";
 import { Issue, User } from "@prisma/client";
 import { Select } from "@radix-ui/themes";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
 import { useQuery } from "react-query";
 
@@ -12,6 +13,7 @@ interface Props {
 
 const AssigneeSelect = ({ issue }: Props) => {
   const { data: users, error, isLoading } = useUsers();
+  const router = useRouter();
 
   if (isLoading) return <Skeleton />;
 
@@ -25,6 +27,7 @@ const AssigneeSelect = ({ issue }: Props) => {
       .catch(() => {
         toast.error("Changes could not be saved.");
       });
+    router.refresh();
   };
 
   return (
